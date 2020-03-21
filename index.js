@@ -8,6 +8,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 let db
+//maybe use cache?
+
+
+//TODO: use controllers and models
 
 MongoClient.connect('mongodb://localhost:27017/animals', (err, database) => {
   if (err) {
@@ -17,7 +21,7 @@ MongoClient.connect('mongodb://localhost:27017/animals', (err, database) => {
   app.listen(port, () => console.log(`Example app listening on port ${port}!!`))
 })
 
-app.use(function (req, res, next) {
+app.use((req, res, next) => {
   req.db = db;
   next();
 });
@@ -34,6 +38,15 @@ app.post('/dog', (req, res) => {
 
   dogs.save(dog)
   res.end()
+})
+
+app.get('/dogs', (req, res) => {
+  const dogs = req.db.collection("Dogs")
+
+  dogs.find().toArray((err, dogs) => {
+    if(err) throw err
+    res.status(200).json(dogs)
+  })
 })
 
 

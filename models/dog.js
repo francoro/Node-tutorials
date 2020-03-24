@@ -16,11 +16,26 @@ exports.add = (async (req) => {
     }
 });
 
-exports.getAll = (async (req) => {
+exports.getByFilter = (async (req) => {
     try {
+
+        let query = {}
+
+        if(req.params.type !== "undefined") {
+            query.type = Number(req.params.type)
+        }
+
+        if(req.params.city !== "undefined") {
+            query.city = req.params.city
+        }
+
+        if(req.params.breed !== "undefined") {
+            query.breed = req.params.breed
+        }
+
         const dogs = req.db.collection("Dogs")
 
-        const response = await dogs.find().toArray()
+        const response = await dogs.find(query).toArray()
         
        return { err: null, data: response }
     } catch (err) {

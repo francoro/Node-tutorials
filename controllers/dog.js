@@ -8,8 +8,8 @@ module.exports = function (app) {
         res.json(data)
     })
 
-    app.get('/dog', async (req, res) => {
-        const { err, data } = await Dog.getAll(req)
+    app.get('/dog/:type/:city/:breed', async (req, res) => {
+        const { err, data } = await Dog.getByFilter(req)
         if (err) return res.send({ error: err.message });
         res.json(data)
     })

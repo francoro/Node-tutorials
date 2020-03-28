@@ -21,23 +21,44 @@ exports.getByFilter = (async (req) => {
 
         let query = {}
 
-        if(req.params.type !== "undefined") {
+        if (req.params.type !== "undefined") {
             query.type = Number(req.params.type)
         }
 
-        if(req.params.city !== "undefined") {
+        if (req.params.city !== "undefined") {
             query.city = req.params.city
         }
 
-        if(req.params.breed !== "undefined") {
+        if (req.params.breed !== "undefined") {
             query.breed = req.params.breed
         }
 
         const dogs = req.db.collection("Dogs")
 
         const response = await dogs.find(query).toArray()
-        
-       return { err: null, data: response }
+
+        return { err: null, data: response }
+    } catch (err) {
+        return { err: err, data: {} }
+    }
+})
+
+exports.getAllBreeds = (async (req) => {
+    try {
+        const dogs = req.db.collection("Dogs")
+        const response = await dogs.distinct('breed')
+        return { err: null, data: response }
+    } catch (err) {
+        return { err: err, data: {} }
+    }
+})
+
+
+exports.getAllCities = (async (req) => {
+    try {
+        const dogs = req.db.collection("Dogs")
+        const response = await dogs.distinct('city')
+        return { err: null, data: response }
     } catch (err) {
         return { err: err, data: {} }
     }

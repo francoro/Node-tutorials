@@ -32,7 +32,8 @@ app.use((req, res, next) => {
 
 require('./controllers/dog')(app);
 
-app.get('/', (req, res) => res.send('Hello!'))
+app.get('/', (req, res) => {
+})
 
 
 

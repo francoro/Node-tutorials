@@ -1,6 +1,7 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const app = express()
+const bcrypt = require('bcrypt');
 const port = 8080
 const MongoClient = require('mongodb').MongoClient
 app.use(bodyParser.json());
@@ -31,9 +32,13 @@ app.use((req, res, next) => {
 });
 
 require('./controllers/dog')(app);
+require('./controllers/user')(app);
+
 
 app.get('/', (req, res) => {
 })
+
+
 
 
 

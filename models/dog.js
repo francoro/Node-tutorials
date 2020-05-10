@@ -1,8 +1,14 @@
+const ObjectId = require('mongodb').ObjectID;
+
 exports.add = (async (req) => {
     try {
         const dogs = req.db.collection("Dogs")
 
         const dog = {
+            user: {
+                _id: new ObjectId(req.body.user.id),
+                email: req.body.user.email
+            },
             src: req.body.src,
             type: req.body.type,
             city: req.body.city,

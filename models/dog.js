@@ -3,10 +3,9 @@ const ObjectId = require('mongodb').ObjectID;
 exports.add = (async (req) => {
     try {
         const dogs = req.db.collection("Dogs")
-
         const dog = {
             user: {
-                _id: new ObjectId(req.body.user.id),
+                _id: new ObjectId(req.body.user._id),
                 email: req.body.user.email
             },
             src: req.body.src,
@@ -42,6 +41,18 @@ exports.getByFilter = (async (req) => {
         const dogs = req.db.collection("Dogs")
 
         const response = await dogs.find(query).toArray()
+
+        return { err: null, data: response }
+    } catch (err) {
+        return { err: err, data: {} }
+    }
+})
+
+exports.getByUserId = (async (req) => {
+    try {
+        const dogs = req.db.collection("Dogs")
+
+        const response = await dogs.find({ 'user._id': new ObjectId(req.params.userId) }).toArray()
 
         return { err: null, data: response }
     } catch (err) {

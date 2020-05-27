@@ -14,6 +14,12 @@ module.exports = function (app) {
         res.json(data)
     })
 
+    app.get('/dog/user/:userId', async (req, res) => {
+        const { err, data } = await Dog.getByUserId(req)
+        if (err) return res.send({ error: err.message });
+        res.json(data)
+    })
+
     app.get('/breed', async (req, res) => {
         const { err, data } = await Dog.getAllBreeds(req)
         if (err) return res.send({ error: err.message });

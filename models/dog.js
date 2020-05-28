@@ -21,6 +21,18 @@ exports.add = (async (req) => {
     }
 });
 
+exports.delete = (async (req) => {
+    try {
+        const dogs = req.db.collection("Dogs")
+
+        await dogs.deleteOne({"_id": new ObjectId(req.params.id)})
+
+        return {err: null, data: req.params.id}
+    } catch (err) {
+        return {err: err, data: {}}
+    }
+})
+
 exports.getByFilter = (async (req) => {
     try {
 

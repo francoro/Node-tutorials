@@ -8,6 +8,12 @@ module.exports = function (app) {
         res.json(data)
     })
 
+    app.delete('/dog/:id', async (req, res) => {
+        const { err, data } = await Dog.delete(req)
+        if (err) return res.send({ error: err.message });
+        res.json(data)
+    })
+
     app.get('/dog/:type/:city/:breed', async (req, res) => {
         const { err, data } = await Dog.getByFilter(req)
         if (err) return res.send({ error: err.message });

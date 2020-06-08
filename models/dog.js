@@ -60,6 +60,18 @@ exports.getByFilter = (async (req) => {
     }
 })
 
+exports.get = (async (req) => {
+    try {
+        const dogs = req.db.collection("Dogs")
+
+        const response = await dogs.find({"_id" : new ObjectId(req.params.id)}).toArray()
+
+        return {err: null, data: response}
+    } catch(err) {
+        return { err: err, data: {} }
+    }
+})
+
 exports.getByUserId = (async (req) => {
     try {
         const dogs = req.db.collection("Dogs")

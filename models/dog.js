@@ -33,6 +33,26 @@ exports.delete = (async (req) => {
     }
 })
 
+exports.edit = (async (req) => {
+    try {
+        const dogs = req.db.collection("Dogs")
+
+       const response = await dogs.update({ "_id": new ObjectId(req.body._id)},{
+              $set: {
+                city: req.body.city,
+                breed: req.body.breed,
+                type: req.body.type,
+                src: req.body.src
+              }
+            }
+         ).toArray()
+
+         return {err: null, data: response}
+    } catch(err) {
+        return {err, data: {}}
+    }
+})
+
 exports.getByFilter = (async (req) => {
     try {
 
